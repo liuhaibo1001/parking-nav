@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>鍋滆溅瀵艰埅浜岀淮鐮?/title></head>
+<body style="text-align:center;padding:50px;background:#f8f9fa;">
+<h2 style="color:#1a365d;">鍋滆溅瀵艰埅 - 缁翠篃绾抽厭搴?/h2>
+<p style="color:#718096;">鐢ㄥ井淇℃壂涓€鎵?/p>
+<div id="qr"></div>
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+<script>
+var qr = qrcode(0, 'M');
+qr.addData('https://liuhaibo1001.github.io/parking-nav');
+qr.make();
+document.getElementById('qr').innerHTML = qr.createSvgTag(8, 4);
+</script>
+</body>
+</html>
