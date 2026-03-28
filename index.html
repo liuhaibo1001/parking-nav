@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>鍋滆溅瀵艰埅 - 缁翠篃绾抽厭搴?/title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+    <style>
+        :root {
+            --primary: #1a365d;
+            --primary-light: #2c5282;
+            --accent: #d4a056;
+            --bg: #f8f9fa;
+            --card: #ffffff;
+            --text: #1a202c;
+            --text-light: #718096;
+            --border: #e2e8f0;
+            --success: #48bb78;
+            --radius: 16px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            min-height: 100vh;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 24px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .header-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            box-shadow: 0 8px 24px rgba(26, 54, 93, 0.2);
+            font-size: 28px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .header p {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        /* Route Card */
+        .route-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        .route-point {
+            padding: 16px 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+
+        .route-point:first-child {
+            border-bottom: 1px dashed var(--border);
+        }
+
+        .point-marker {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .point-marker.start {
+            background: linear-gradient(135deg, var(--accent), #e6b980);
+            color: white;
+        }
+
+        .point-marker.end {
+            background: linear-gradient(135deg, var(--success), #68d391);
+            color: white;
+        }
+
+        .point-info { flex: 1; }
+
+        .point-label {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-bottom: 2px;
+        }
+
+        .point-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 2px;
+        }
+
+        .point-address {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        /* Distance */
+        .distance-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: var(--bg);
+            margin: 0 20px 16px;
+            border-radius: 10px;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .distance-badge strong { color: var(--primary); }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-gaode {
+            background: linear-gradient(135deg, #00a870, #00c880);
+            color: white;
+            box-shadow: 0 4px 16px rgba(0, 168, 112, 0.3);
+        }
+
+        .btn-tencent {
+            background: linear-gradient(135deg, #1a8cff, #3da3ff);
+            color: white;
+            box-shadow: 0 4px 16px rgba(26, 140, 255, 0.3);
+        }
+
+        .btn-baidu {
+            background: linear-gradient(135deg, #2932e1, #4c5aff);
+            color: white;
+            box-shadow: 0 4px 16px rgba(41, 50, 225, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+        }
+
+        .btn-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Tips */
+        .tips {
+            margin-top: auto;
+            padding-top: 20px;
+        }
+
+        .tip-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--text-light);
+            padding: 10px 12px;
+            background: var(--card);
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .tip-item svg {
+            width: 16px;
+            height: 16px;
+            fill: var(--accent);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px 0 8px;
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .footer-logo {
+            font-weight: 600;
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-icon">馃殫</div>
+            <h1>鍋滆溅鎸囧紩</h1>
+            <p>缁翠篃绾抽厭搴?路 瑗挎箹鍏洯搴?/p>
+        </header>
+
+        <div class="route-card">
+            <div class="route-point">
+                <div class="point-marker start">A</div>
+                <div class="point-info">
+                    <div class="point-label">鍑哄彂鍦?/div>
+                    <div class="point-name">缁翠篃绾抽厭搴楋紙宀抽簱灞辨瀛愭床瑗挎箹鍏洯搴楋級</div>
+                    <div class="point-address">鏋灄涓€璺?23鍙?/div>
+                </div>
+            </div>
+
+            <div class="route-point">
+                <div class="point-marker end">B</div>
+                <div class="point-info">
+                    <div class="point-label">鐩殑鍦?/div>
+                    <div class="point-name">鍔涘姏灏忛櫌鍋滆溅鍦?/div>
+                    <div class="point-address">鏋灄涓€璺?79鍙?/div>
+                </div>
+            </div>
+
+            <div class="distance-badge">
+                馃搷 绾?<strong>500绫?/strong> 路 棰勮 <strong>2鍒嗛挓</strong>
+            </div>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="https://uri.amap.com/navigation?from=112.936435,28.234789,缁翠篃绾抽厭搴?to=112.939156,28.237867,鍔涘姏灏忛櫌鍋滆溅鍦?mode=car&policy=1&src=vienna_hotel" class="btn btn-gaode" target="_blank">
+                <div class="btn-icon">馃椇锔?/div>
+                楂樺痉鍦板浘瀵艰埅
+            </a>
+            <a href="https://apis.map.qq.com/uri/v1/routeplan?type=drive&from=缁翠篃绾抽厭搴?fromcoord=28.234789,112.936435&to=鍔涘姏灏忛櫌鍋滆溅鍦?tocoord=28.237867,112.939156&policy=0&referer=vienna_hotel" class="btn btn-tencent" target="_blank">
+                <div class="btn-icon">馃Л</div>
+                鑵捐鍦板浘瀵艰埅
+            </a>
+            <a href="https://api.map.baidu.com/direction?origin=28.234789,112.936435|缁翠篃绾抽厭搴?destination=28.237867,112.939156|鍔涘姏灏忛櫌鍋滆溅鍦?mode=driving&src=vienna_hotel&coord_type=gc02&output=html" class="btn btn-baidu" target="_blank">
+                <div class="btn-icon">馃搷</div>
+                鐧惧害鍦板浘瀵艰埅
+            </a>
+        </div>
+
+        <div class="tips">
+            <div class="tip-item">
+                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                <span>鍑洪厭搴楀彸杞紝娌挎灚鏋椾竴璺洿琛岀害500绫冲嵆鍒?/span>
+            </div>
+            <div class="tip-item">
+                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                <span>鍋滆溅鍦轰綅浜庤タ婀栦簩涓夌鍖猴紝閰掑簵涓滃寳鏂瑰悜</span>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <span class="footer-logo">缁翠篃绾抽厭搴?/span> 路 瀹捐嚦濡傚綊
+        </footer>
+    </div>
+</body>
+</html>
